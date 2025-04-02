@@ -64,7 +64,7 @@ class ViewController: UIViewController {
         stackView.spacing = 10
         stackView.distribution = .fillEqually
         stackView.backgroundColor = .black
-        return stackView
+        return stackView //커밋 테스트..
     }
 }
 
