@@ -40,26 +40,21 @@ class ViewController: UIViewController {
 
         var horizontalStacks: [UIStackView] = [] // 일단 가로 스택뷰를 담을 배열 생성
         
+            for row in buttonTitles {
+                var buttons: [UIButton] = []
 
-        for row in buttonTitles { // 이중 for문으로 이중 배열의 배열 한줄씩 돌면서 row에 넣는다
-            var buttons: [UIButton] = [] // 개별적인 버튼을 담을 배열 생성
-
-            for title in row { // 계산기 버튼들의 한 줄씩 돌면서 title에 넣는다
-                let button = UIButton()
-                button.setTitle(title, for: .normal)
-                button.setTitleColor(.white, for: .normal)
-                button.titleLabel?.font = .boldSystemFont(ofSize: 30)
-                button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
-                button.layer.cornerRadius = 40
-                buttons.append(button) // 생성된 버튼을 빈 버튼배열에 넣는다
-                button.snp.makeConstraints {
-                    $0.width.equalTo(button.snp.height) // 버튼 너비와 높이를 같게 해서 모양을 원형으로 만든다
+                for title in row {
+                    let isOperator = ["+", "-", "*", "/", "=", "AC"].contains(title)
+                    let button = makeButton(
+                        titleValue: title,
+                        backgroundColor: isOperator ? .orange : UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+                    )
+                    buttons.append(button)
                 }
-            }
 
-            let horizontalStack = makeHorizontalStackView(buttons) //배열에 개별버튼이 쭉 담기면 그걸 가로뷰스택으로 만든다
-            horizontalStacks.append(horizontalStack) // 만든 가로뷰스택을 배열에 쭉 담아놓는다
-        }
+                let horizontalStack = makeHorizontalStackView(buttons)
+                horizontalStacks.append(horizontalStack)
+            }
 
         let verticalStack = makeVerticalStackView(horizontalStacks) // 만들어진 가로뷰스택들을 세로뷰스택으로 세로로 쌓는다
         view.addSubview(verticalStack)
@@ -86,5 +81,20 @@ class ViewController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.backgroundColor = .black
         return stackView
+    }
+    
+    func makeButton(titleValue: String, action: Selector? = nil, backgroundColor: UIColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)) -> UIButton {
+        let button = UIButton()
+        button.setTitle(titleValue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+        button.backgroundColor = backgroundColor
+        button.layer.cornerRadius = 40
+
+        button.snp.makeConstraints {
+            $0.width.equalTo(button.snp.height)
+        }
+
+        return button
     }
 }
