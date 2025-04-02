@@ -35,7 +35,7 @@ class ViewController: UIViewController {
             ["7", "8", "9", "+"],
             ["4", "5", "6", "-"],
             ["1", "2", "3", "*"],
-            ["0", ".", "=", "/"]
+            ["AC", "0", "=", "/"]
         ]
 
         var horizontalStacks: [UIStackView] = [] // 일단 가로 스택뷰를 담을 배열 생성
